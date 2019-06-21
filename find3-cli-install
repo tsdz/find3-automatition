@@ -1,0 +1,16 @@
+#!/bin/bash
+sudo apt-get update
+#installing go
+curl -L https://dl.google.com/go/go1.12.6.linux-armv6l.tar.gz -o go1.12.6.linux-armv6l.tar.gz
+sudo tar -C /usr/local -xvf go1.12.6.linux-armv6l.tar.gz
+cat >> ~/.profile << 'EOF'
+export GOPATH=$HOME/go
+export PATH=/usr/local/go/bin:$PATH:$GOPATH/bin
+EOF
+source ~/.profile
+#installing cli-scanner dependencies
+sudo apt-get install wireless-tools net-tools libpcap-dev bluetooth
+#dowloading cli-scanner
+go get -u -v github.com/schollz/find3-cli-scanner
+#moving cli-scanner to the path
+sudo mv $GOPATH/bin/find3-cli-scanner /usr/local/bin
